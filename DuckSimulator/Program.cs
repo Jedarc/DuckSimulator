@@ -12,29 +12,33 @@ namespace DuckSimulator
             Console.WriteLine("---------");
             PatoSelvagem patoSelvagem = new PatoSelvagem();
             patoSelvagem.Exibir();
-            patoSelvagem.Grasnar();
+            patoSelvagem.PerformarGrasnido();
             patoSelvagem.Nadar();
+            patoSelvagem.PerformarVoo();
             Console.WriteLine("---------");
 
             Console.WriteLine("---------");
             PatoCabecaVermelha patoCabecaVermelha = new PatoCabecaVermelha();
             patoCabecaVermelha.Exibir();
-            patoCabecaVermelha.Grasnar();
+            patoCabecaVermelha.PerformarGrasnido();
             patoCabecaVermelha.Nadar();
+            patoCabecaVermelha.PerformarVoo();
             Console.WriteLine("---------");
 
             Console.WriteLine("---------");
             PatoDeBorracha patoDeBorracha = new PatoDeBorracha();
             patoDeBorracha.Exibir();
-            patoDeBorracha.Grasnar();
+            patoDeBorracha.PerformarGrasnido();
             patoDeBorracha.Nadar();
+            patoDeBorracha.PerformarVoo();
             Console.WriteLine("---------");
 
             Console.WriteLine("---------");
             PatoDeMadeira patoDeMadeira = new PatoDeMadeira();
             patoDeMadeira.Exibir();
-            patoDeMadeira.Grasnar();
+            patoDeMadeira.PerformarGrasnido();
             patoDeMadeira.Nadar();
+            patoDeMadeira.PerformarVoo();
             Console.WriteLine("---------");
 
             Console.ReadKey();
