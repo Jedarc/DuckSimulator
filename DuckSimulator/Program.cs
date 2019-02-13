@@ -1,5 +1,8 @@
 ﻿using DuckSimulator.ClassesDerivadas;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace DuckSimulator
 {
@@ -9,39 +12,38 @@ namespace DuckSimulator
         {
             Console.WriteLine("Hello World!");
 
-            Console.WriteLine("---------");
-            PatoSelvagem patoSelvagem = new PatoSelvagem();
-            patoSelvagem.Exibir();
-            patoSelvagem.PerformarGrasnido();
-            patoSelvagem.Nadar();
-            patoSelvagem.PerformarVoo();
-            Console.WriteLine("---------");
+            var assemblyTypeList = GetAssemblyTypes("DuckSimulator.ClassesDerivadas");
 
-            Console.WriteLine("---------");
-            PatoCabecaVermelha patoCabecaVermelha = new PatoCabecaVermelha();
-            patoCabecaVermelha.Exibir();
-            patoCabecaVermelha.PerformarGrasnido();
-            patoCabecaVermelha.Nadar();
-            patoCabecaVermelha.PerformarVoo();
-            Console.WriteLine("---------");
+            foreach(var assemblyType in assemblyTypeList)
+            {
+                Console.WriteLine($" --- {assemblyType.Name} --- ");
 
-            Console.WriteLine("---------");
-            PatoDeBorracha patoDeBorracha = new PatoDeBorracha();
-            patoDeBorracha.Exibir();
-            patoDeBorracha.PerformarGrasnido();
-            patoDeBorracha.Nadar();
-            patoDeBorracha.PerformarVoo();
-            Console.WriteLine("---------");
+                var classMethods = GetAssemblyMethods(assemblyType);
 
-            Console.WriteLine("---------");
-            PatoDeMadeira patoDeMadeira = new PatoDeMadeira();
-            patoDeMadeira.Exibir();
-            patoDeMadeira.PerformarGrasnido();
-            patoDeMadeira.Nadar();
-            patoDeMadeira.PerformarVoo();
-            Console.WriteLine("---------");
+                Object classInstanceObject = Activator.CreateInstance(assemblyType);
+                foreach (var method in classMethods)
+                {
+                    method.Invoke(classInstanceObject, null);
+                }
+            }
+
+            Console.WriteLine(" --- FIM --- ");
 
             Console.ReadKey();
         }
+
+        private static IEnumerable<Type> GetAssemblyTypes(string assemblyNamespace)
+        {
+            return from assemblyType in Assembly.GetExecutingAssembly().GetTypes()
+                   where assemblyType.IsClass && assemblyType.Namespace == assemblyNamespace
+                   select assemblyType;
+        }
+
+        private static IEnumerable<MethodInfo> GetAssemblyMethods(Type assemblyType)
+        {
+            //var result = assemblyType.GetInterfaceMap(interfaceType).TargetMethods;
+            return assemblyType.GetMethods().Where(method => method.DeclaringType.FullName != "System.Object" && !method.IsSpecialName);
+        }
+
     }
 }
