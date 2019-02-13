@@ -41,7 +41,6 @@ namespace DuckSimulator
 
         private static IEnumerable<MethodInfo> GetAssemblyMethods(Type assemblyType)
         {
-            //var result = assemblyType.GetInterfaceMap(interfaceType).TargetMethods;
             return assemblyType.GetMethods().Where(method => method.DeclaringType.FullName != "System.Object" && !method.IsSpecialName);
         }
 
